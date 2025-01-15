@@ -15,15 +15,13 @@ def list_images():
         # Volume内の画像ディレクトリの内容を取得
         files = os.listdir(image_dir)
 
-        # ファイル名をデコード
-        decoded_files = [file.encode('utf-8').decode('unicode_escape') for file in files]
-
-        # JSONレスポンスに渡す前に再度エスケープを解除
-        decoded_files = [file.encode('utf-8').decode() for file in decoded_files]
+        # ファイル名をバイト列として処理してUTF-8にデコード
+        decoded_files = [file.encode().decode('utf-8') for file in files]
 
         return jsonify({'files': decoded_files}), 200
     except Exception as e:
         return jsonify({'error': f'Failed to list files: {e}'}), 500
+
 
 
 
