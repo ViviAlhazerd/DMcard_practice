@@ -5,7 +5,7 @@ import requests
 app = Flask(__name__)
 
 # Railway Volumeのパス
-volume_path = os.getenv("RAILWAY_VOLUME_PATH", "/mnt/storage")
+volume_path = os.getenv("RAILWAY_VOLUME_PATH", "/image")
 image_dir = os.path.join(volume_path, "images")
 os.makedirs(image_dir, exist_ok=True)  # ディレクトリがない場合は作成
 
