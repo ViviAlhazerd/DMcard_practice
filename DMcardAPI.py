@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 import os
 import requests
 
@@ -21,9 +21,6 @@ def list_images():
         return jsonify({'files': decoded_files}), 200
     except Exception as e:
         return jsonify({'error': f'Failed to list files: {e}'}), 500
-
-
-
 
 @app.route('/save_image', methods=['POST'])
 def save_image():
