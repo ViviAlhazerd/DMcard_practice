@@ -9,6 +9,7 @@ volume_path = os.getenv("RAILWAY_VOLUME_PATH", "/image")
 image_dir = os.path.join(volume_path, "images")
 os.makedirs(image_dir, exist_ok=True)  # ディレクトリがない場合は作成
 
+# 保存されたファイルをJSONで返す
 @app.route('/list_images', methods=['GET'])
 def list_images():
     try:
@@ -22,8 +23,14 @@ def list_images():
     except Exception as e:
         return jsonify({'error': f'Failed to list files: {e}'}), 500
 
-
-
+# 指定された画像を表示
+@app.route('/images/<filename>', methods=['GET'])
+def serve_image(filename):
+    try:
+        # ファイルが存在する場合に返す
+        return send_from_directory(image_dir, filename)
+    except FileNotFoundError:
+        return jsonify({'error': 'File not found'}), 404
 
 @app.route('/save_image', methods=['POST'])
 def save_image():
