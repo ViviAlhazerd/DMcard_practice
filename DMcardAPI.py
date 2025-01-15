@@ -18,9 +18,13 @@ def list_images():
         # ファイル名をデコード
         decoded_files = [file.encode('utf-8').decode('unicode_escape') for file in files]
 
+        # JSONレスポンスに渡す前に再度エスケープを解除
+        decoded_files = [file.encode('utf-8').decode() for file in decoded_files]
+
         return jsonify({'files': decoded_files}), 200
     except Exception as e:
         return jsonify({'error': f'Failed to list files: {e}'}), 500
+
 
 
 @app.route('/save_image', methods=['POST'])
